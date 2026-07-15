@@ -1,0 +1,168 @@
+@import "tailwindcss";
+@import "@copilotkit/react-ui/v2/styles.css";
+
+@theme {
+  --color-canvas: oklch(0.978 0.008 255);
+  --color-surface: oklch(1 0 0);
+  --color-surface-muted: oklch(0.992 0.004 255);
+  --color-ink: oklch(0.235 0.024 262);
+  --color-muted: oklch(0.56 0.019 260);
+  --color-line: oklch(0.92 0.01 260);
+
+  --color-brand: oklch(0.58 0.19 278);
+  --color-brand-soft: oklch(0.93 0.045 282);
+  --color-positive: oklch(0.69 0.16 154);
+  --color-negative: oklch(0.63 0.2 28);
+
+  --color-cat-food: oklch(0.73 0.146 60);
+  --color-cat-transport: oklch(0.64 0.14 244);
+  --color-cat-housing: oklch(0.61 0.154 318);
+  --color-cat-entertainment: oklch(0.67 0.18 346);
+  --color-cat-utilities: oklch(0.72 0.129 202);
+  --color-cat-shopping: oklch(0.78 0.155 115);
+  --color-cat-health: oklch(0.72 0.14 165);
+  --color-cat-travel: oklch(0.74 0.144 18);
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --radius-card: 22px;
+}
+
+html,
+body {
+  min-height: 100%;
+  background:
+    radial-gradient(circle at top left, color-mix(in oklab, var(--color-brand-soft) 88%, white) 0%, transparent 34%),
+    linear-gradient(180deg, var(--color-canvas), color-mix(in oklab, var(--color-canvas) 90%, white));
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-brand) 22%, white);
+}
+
+/* ------------------------------------------------------------------ *
+ * Responsive canvas — the dashboard reflows against the AVAILABLE width
+ * of the left pane (the V2 chat is a fixed right column), so the layout
+ * adapts to the docked chat via container queries, never overlapping.
+ * ------------------------------------------------------------------ */
+.cc-canvas {
+  container-type: inline-size;
+}
+
+.cc-shell,
+.cc-hero,
+.cc-split {
+  display: grid;
+  gap: 1.5rem;
+}
+@container (min-width: 68rem) {
+  .cc-shell { grid-template-columns: minmax(0, 1fr) 360px; }
+}
+@container (min-width: 52rem) {
+  .cc-hero { grid-template-columns: minmax(0, 1fr) 280px; }
+}
+@container (min-width: 46rem) {
+  .cc-split { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
+}
+
+/* ------------------------------------------------------------------ *
+ * Chat pane — our own header above the V2 <CopilotChat>.
+ * ------------------------------------------------------------------ */
+.cc-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 60px;
+  flex-shrink: 0;
+  padding: 0 1.1rem;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.02rem;
+  letter-spacing: -0.01em;
+  background: linear-gradient(
+    120deg,
+    var(--color-brand),
+    color-mix(in oklab, var(--color-brand) 70%, #312e81)
+  );
+}
+.cc-chat-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.25);
+}
+.cc-chat-sub {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* Make the V2 CopilotChat fill the pane below the header. */
+.cc-canvas ~ aside [data-copilotkit],
+aside > [data-copilotkit] {
+  height: 100%;
+  min-height: 0;
+}
+
+/* Grouped tool calls — one collapsible disclosure, like the V2 "Thought" block. */
+.cc-tools {
+  margin: 0.35rem 0 0.75rem;
+}
+.cc-tools-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  list-style: none;
+  padding: 3px 2px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  transition: color 0.15s ease;
+}
+.cc-tools-summary:hover {
+  color: var(--color-ink);
+}
+.cc-tools-summary::-webkit-details-marker {
+  display: none;
+}
+.cc-tools-chevron {
+  font-size: 0.7rem;
+  transition: transform 0.15s ease;
+}
+.cc-tools[open] .cc-tools-chevron {
+  transform: rotate(90deg);
+}
+.cc-tools-body {
+  margin-top: 0.4rem;
+  padding-left: 0.1rem;
+}
+
+/* ------------------------------------------------------------------ *
+ * CopilotKit V2 theme — map the shadcn tokens to the app's indigo accent.
+ * ------------------------------------------------------------------ */
+[data-copilotkit] {
+  --primary: var(--color-brand);
+  --primary-foreground: oklch(0.98 0 0);
+  --ring: var(--color-brand);
+  --accent: var(--color-brand-soft);
+  --accent-foreground: var(--color-ink);
+  --sidebar-primary: var(--color-brand);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-ring: var(--color-brand);
+  --radius: 0.9rem;
+}

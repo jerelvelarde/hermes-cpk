@@ -1,0 +1,45 @@
+@import "tailwindcss";
+@import "@copilotkit/react-ui/styles.css";
+
+/*
+ * Ledger — a self-modifying expense tracker.
+ * Theme lives here as CSS variables so the Hermes agent can restyle the whole
+ * app by editing a handful of values. Tailwind v4 reads the @theme block.
+ */
+@theme {
+  --color-canvas: oklch(0.98 0.005 250);
+  --color-surface: oklch(1 0 0);
+  --color-ink: oklch(0.22 0.02 260);
+  --color-muted: oklch(0.55 0.02 260);
+  --color-line: oklch(0.92 0.01 260);
+
+  --color-brand: oklch(0.55 0.15 265);
+  --color-brand-soft: oklch(0.95 0.03 265);
+  --color-positive: oklch(0.68 0.15 155);
+  --color-negative: oklch(0.62 0.19 22);
+
+  --color-cat-food: oklch(0.7 0.15 40);
+  --color-cat-transport: oklch(0.65 0.14 250);
+  --color-cat-housing: oklch(0.6 0.13 300);
+  --color-cat-entertainment: oklch(0.68 0.16 340);
+  --color-cat-utilities: oklch(0.7 0.14 200);
+  --color-cat-shopping: oklch(0.72 0.15 100);
+  --color-cat-health: oklch(0.68 0.15 160);
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --radius-card: 16px;
+}
+
+html,
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Match the CopilotKit sidebar to the app's brand. */
+.copilotKitWindow {
+  --copilot-kit-primary-color: var(--color-brand);
+  --copilot-kit-contrast-color: #fff;
+}

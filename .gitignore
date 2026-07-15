@@ -1,0 +1,29 @@
+# --- Secrets (NEVER commit) ---
+adapter.env
+.env
+.env.*
+**/.env.local
+**/.env
+
+# --- Dependencies & build output ---
+node_modules/
+**/node_modules/
+.next/
+**/.next/
+out/
+**/out/
+*.tsbuildinfo
+**/next-env.d.ts
+
+# --- Runtime / trace artifacts ---
+.hermes-trace/
+
+# --- External repos (their own git remotes; not part of this project) ---
+/hermes/
+/nous-hermes-agent/
+/openclaw/
+
+# --- Local tooling / OS ---
+.claude/
+.DS_Store
+*.log

@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+@theme {
+  /* Deep ink with a cool teal cast (a nod to Hermes' #041c1c), not the generic
+     blue-black of every default dashboard. */
+  --color-bg: #05080b;
+  --color-panel: #0a0f14;
+  --color-panel-raised: #10161d;
+  --color-line: #1b2530;
+  --color-line-soft: #131b23;
+  --color-text: #dfe7ee;
+  --color-muted: #6f8092;
+  --color-faint: #45535f;
+
+  /* Liveness (functional, brand-independent). */
+  --color-ok: #37d69b;
+  --color-warn: #f5b544;
+  --color-err: #fb5a68;
+
+  /* Brand identities — the palette IS the story. */
+  --color-copilot: #6d6cff;      /* CopilotKit indigo */
+  --color-copilot-2: #9aa2ff;    /* lighter indigo — the AG-UI transport */
+  --color-hermes: #ffce4a;       /* Hermes / Nous gold */
+  --color-hermes-2: #f0a92e;     /* Hermes amber */
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "SFMono-Regular", ui-monospace, "SF Mono", Menlo, Monaco, "Cascadia Code", "Roboto Mono", monospace;
+}
+
+:root {
+  --bg: var(--color-bg);
+  --panel: var(--color-panel);
+  --panel-raised: var(--color-panel-raised);
+  --line: var(--color-line);
+  --line-soft: var(--color-line-soft);
+  --text: var(--color-text);
+  --muted: var(--color-muted);
+  --faint: var(--color-faint);
+  --ok: var(--color-ok);
+  --warn: var(--color-warn);
+  --err: var(--color-err);
+  --copilot: var(--color-copilot);
+  --copilot-2: var(--color-copilot-2);
+  --hermes: var(--color-hermes);
+  --hermes-2: var(--color-hermes-2);
+  --accent: var(--color-copilot);
+}
+
+html,
+body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  /* Blueprint grid — faint cool lines on a graph-paper cadence. Reads
+     "instrument", not "hero gradient". A vignette darkens the edges. */
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--copilot) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--copilot) 6%, transparent) 1px, transparent 1px),
+    radial-gradient(120% 90% at 50% 0%, transparent 60%, color-mix(in oklab, black 55%, transparent) 100%);
+  background-size: 34px 34px, 34px 34px, 100% 100%;
+  background-attachment: fixed;
+}
+
+/* Film grain overlay — the single biggest cure for "flat AI render". */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Everything sits above the grain. */
+#__next, body > * { position: relative; z-index: 1; }
+
+* { box-sizing: border-box; }
+
+::selection { background: color-mix(in oklab, var(--copilot) 40%, transparent); }
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: color-mix(in oklab, var(--line) 55%, var(--muted)); }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* Monospace instrument chrome — labels, counts, seq, timestamps. */
+.chrome {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Top "power rail": a 2px gradient bar with a slow travelling sheen. */
+.powerrail {
+  height: 2px;
+  background: linear-gradient(90deg, var(--copilot) 0%, var(--copilot-2) 40%, var(--hermes) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.powerrail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+  width: 22%;
+  transform: translateX(-120%);
+  animation: sheen 5.5s ease-in-out infinite;
+}
+@keyframes sheen {
+  0% { transform: translateX(-120%); }
+  55%, 100% { transform: translateX(560%); }
+}
+
+/* Live pulse. */
+@keyframes livepulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, currentColor 55%, transparent); }
+  70% { box-shadow: 0 0 0 5px color-mix(in oklab, currentColor 0%, transparent); }
+}
+.live-dot { animation: livepulse 1.7s ease-out infinite; }
+
+/* A message pulse travelling an edge between two nodes in the Flow graph.
+   --from/--to are set inline per pulse; the dot fades in, glides, fades out. */
+@keyframes flowmove {
+  0%   { left: var(--from); opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  14%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  86%  { opacity: 1; }
+  100% { left: var(--to); opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+}
+/* Node "receives traffic" flash. */
+@keyframes nodeflash {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--fc) 60%, transparent); }
+  100% { box-shadow: 0 0 26px 2px color-mix(in oklab, var(--fc) 0%, transparent); }
+}
+.node-flash { animation: nodeflash 0.7s ease-out; }
+
+/* Reusable subtle panel glass. */
+.glass { background: color-mix(in oklab, var(--panel) 82%, transparent); backdrop-filter: blur(8px); }
