@@ -9,7 +9,7 @@ import {
 import { ToolCallCard } from "@/components/ToolCallCard";
 import { DiffCard } from "@/components/DiffCard";
 import { PdfViewer } from "@/components/PdfViewer";
-import { ToolCallsGroup } from "@/components/ToolCallsGroup";
+import { GroupedMessageView } from "@/components/GroupedMessageView";
 import {
   byCategory,
   budgetRemaining,
@@ -149,7 +149,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
                   "Hi — I'm the Hermes agent, running inside this app. Tell me to change how Financial Ledger looks or works and watch it update live.",
               }}
               // Collapse each message's tool calls into one disclosure.
-              chatView={{ messageView: { assistantMessage: { toolCallsView: ToolCallsGroup } } }}
+              chatView={{ messageView: { children: GroupedMessageView } }}
             />
           </div>
         </aside>

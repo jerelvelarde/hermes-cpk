@@ -151,6 +151,15 @@ aside > [data-copilotkit] {
   margin-top: 0.4rem;
   padding-left: 0.1rem;
 }
+.cc-reasoning-body {
+  max-height: 16rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+  padding: 0.25rem 0.1rem 0.1rem;
+}
 
 /* ------------------------------------------------------------------ *
  * CopilotKit V2 theme — map the shadcn tokens to the app's green accent.
