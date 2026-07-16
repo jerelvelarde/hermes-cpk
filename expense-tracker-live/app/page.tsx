@@ -46,20 +46,20 @@ export default function Home() {
                 </div>
                 <div className="mt-6 grid grid-cols-[repeat(auto-fit,minmax(13rem,1fr))] gap-4">
                   <StatCard
-                    label="Spent this month"
+                    label="Spent so far"
                     value={currency(spent)}
                     hint={`${budgetUsedPercent}% of ${currency(MONTHLY_BUDGET)}`}
                     icon={<CircleDollarSign className="h-5 w-5" />}
                   />
                   <StatCard
-                    label="Budget remaining"
+                    label="Left to spend"
                     value={currency(remaining)}
                     hint={remaining >= 0 ? "Still under target" : "You are over budget"}
                     tone={remaining >= 0 ? "positive" : "negative"}
                     icon={<ArrowUpRight className="h-5 w-5" />}
                   />
                   <StatCard
-                    label="Top category"
+                    label="Biggest spend"
                     value={topCategory?.category ?? "—"}
                     hint={topCategory ? currency(topCategory.amount) : "No expenses yet"}
                   />
@@ -77,11 +77,11 @@ export default function Home() {
 
         <aside className="space-y-6">
           <section className="rounded-[var(--radius-card)] border border-[var(--color-line)] bg-[var(--color-surface)] p-5 shadow-sm">
-            <p className="text-sm font-medium text-[var(--color-muted)]">Live Hermes sidebar</p>
+            <p className="text-sm font-medium text-[var(--color-muted)]">Live CopilotKit × OpenClaw sidebar</p>
             <h2 className="mt-2 text-xl font-semibold tracking-tight">Change Financial Ledger without leaving the page</h2>
             <p className="mt-3 text-sm leading-6 text-[var(--color-muted)]">
-              Open the sidebar on the right and ask Hermes to restyle cards, add features, tweak seeded data,
-              or reshape the dashboard. The app is wired to the Hermes AG-UI adapter in this folder.
+              Open the sidebar on the right and ask OpenClaw to restyle cards, add features, tweak seeded data,
+              or reshape the dashboard. The app is wired to the OpenClaw AG-UI adapter in this folder.
             </p>
             <ul className="mt-4 space-y-2 text-sm text-[var(--color-muted)]">
               <li>• “Make the dashboard dark mode by default.”</li>

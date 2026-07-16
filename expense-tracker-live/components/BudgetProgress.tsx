@@ -5,7 +5,7 @@ export function BudgetProgress({ spent, budget }: { spent: number; budget: numbe
 
   return (
     <div className="min-w-0 rounded-[var(--radius-card)] border border-white/60 bg-white/80 p-5 shadow-sm backdrop-blur">
-      <p className="text-sm font-medium text-[var(--color-muted)]">Monthly budget</p>
+      <p className="text-sm font-medium text-[var(--color-muted)]">Budget cap</p>
       <div className="mt-3 flex flex-wrap items-baseline justify-between gap-3">
         <p className="text-[clamp(1.75rem,5vw,2.25rem)] font-semibold leading-none tracking-tight tabular-nums text-[var(--color-ink)]">
           ${budget.toLocaleString("en-US")}
@@ -17,7 +17,7 @@ export function BudgetProgress({ spent, budget }: { spent: number; budget: numbe
               : "bg-[color-mix(in_oklab,var(--color-positive)_14%,white)] text-[var(--color-positive)]"
           }`}
         >
-          {overBudget ? "Over budget" : "On track"}
+          {overBudget ? "Over budget" : "Healthy"}
         </span>
       </div>
       <div className="mt-5 h-3 rounded-full bg-white">

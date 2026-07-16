@@ -9,7 +9,7 @@ type Status = "inProgress" | "executing" | "complete";
 
 const MAX_ROWS = 40;
 
-// Human-in-the-loop edit card: when Hermes writes/patches a file, show the
+// Human-in-the-loop edit card: when OpenClaw writes/patches a file, show the
 // red/green diff and offer an Undo that reverts the change on disk (which
 // hot-reloads the app back).
 export function DiffCard({
@@ -124,7 +124,7 @@ export function DiffCard({
           </button>
         )}
         <span className="ml-auto font-mono text-[10px] uppercase tracking-wider text-neutral-400">
-          {kind === "patch" ? "hermes · patch" : "hermes · write_file"}
+          {kind === "patch" ? "openclaw · patch" : "openclaw · write_file"}
         </span>
       </div>
     </div>
