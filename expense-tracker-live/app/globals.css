@@ -9,8 +9,8 @@
   --color-muted: oklch(0.56 0.019 260);
   --color-line: oklch(0.92 0.01 260);
 
-  --color-brand: oklch(0.58 0.19 278);
-  --color-brand-soft: oklch(0.93 0.045 282);
+  --color-brand: oklch(0.69 0.16 154);
+  --color-brand-soft: oklch(0.95 0.04 160);
   --color-positive: oklch(0.69 0.16 154);
   --color-negative: oklch(0.63 0.2 28);
 
@@ -92,7 +92,7 @@ body {
   background: linear-gradient(
     120deg,
     var(--color-brand),
-    color-mix(in oklab, var(--color-brand) 70%, #312e81)
+    color-mix(in oklab, var(--color-brand) 70%, #065f46)
   );
 }
 .cc-chat-dot {
@@ -153,7 +153,7 @@ aside > [data-copilotkit] {
 }
 
 /* ------------------------------------------------------------------ *
- * CopilotKit V2 theme — map the shadcn tokens to the app's indigo accent.
+ * CopilotKit V2 theme — map the shadcn tokens to the app's green accent.
  * ------------------------------------------------------------------ */
 [data-copilotkit] {
   --primary: var(--color-brand);
