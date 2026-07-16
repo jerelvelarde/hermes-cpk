@@ -239,8 +239,8 @@ def render_pdf(metrics: Metrics, out_path: Path) -> None:
     card_h = 84
     cards = [
         ("Monthly budget", money(metrics.budget), "planned spend"),
-        ("Spent this month", money(metrics.spent), f"{metrics.transaction_count} transactions"),
-        ("Budget remaining", money(metrics.remaining), "under target" if metrics.remaining >= 0 else "over budget"),
+        ("Spent so far", money(metrics.spent), f"{metrics.transaction_count} transactions"),
+        ("Left to spend", money(metrics.remaining), "under target" if metrics.remaining >= 0 else "over budget"),
         ("Budget used", pct(metrics.budget_used_pct), f"avg txn {money(metrics.avg_transaction)}"),
         (
             "Top category",

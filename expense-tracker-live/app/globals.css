@@ -9,8 +9,9 @@
   --color-muted: oklch(0.56 0.019 260);
   --color-line: oklch(0.92 0.01 260);
 
-  --color-brand: oklch(0.58 0.19 278);
-  --color-brand-soft: oklch(0.93 0.045 282);
+  /* OpenClaw signature coral (#ff5c5c) */
+  --color-brand: oklch(0.674 0.19 19);
+  --color-brand-soft: oklch(0.93 0.05 20);
   --color-positive: oklch(0.69 0.16 154);
   --color-negative: oklch(0.63 0.2 28);
 
@@ -92,7 +93,7 @@ body {
   background: linear-gradient(
     120deg,
     var(--color-brand),
-    color-mix(in oklab, var(--color-brand) 70%, #312e81)
+    color-mix(in oklab, var(--color-brand) 68%, #bd4531)
   );
 }
 .cc-chat-dot {
@@ -148,12 +149,15 @@ aside > [data-copilotkit] {
   transform: rotate(90deg);
 }
 .cc-tools-body {
-  margin-top: 0.4rem;
-  padding-left: 0.1rem;
+  margin-top: 0.45rem;
+  padding: 0.1rem 0.7rem;
+  border: 1px solid color-mix(in oklab, var(--color-line) 70%, transparent);
+  border-radius: 0.85rem;
+  background: color-mix(in oklab, var(--color-surface) 94%, transparent);
 }
 
 /* ------------------------------------------------------------------ *
- * CopilotKit V2 theme — map the shadcn tokens to the app's indigo accent.
+ * CopilotKit V2 theme — map the shadcn tokens to the OpenClaw coral accent.
  * ------------------------------------------------------------------ */
 [data-copilotkit] {
   --primary: var(--color-brand);

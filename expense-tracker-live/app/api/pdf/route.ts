@@ -4,7 +4,7 @@ import path from "path";
 
 export const dynamic = "force-dynamic";
 
-// Serves a PDF that lives inside the app directory (e.g. a report Hermes
+// Serves a PDF that lives inside the app directory (e.g. a report OpenClaw
 // generated) as a binary stream, so the inline PdfViewer can embed it.
 const ROOT = process.cwd();
 

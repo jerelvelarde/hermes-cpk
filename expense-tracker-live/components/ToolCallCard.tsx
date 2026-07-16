@@ -1,10 +1,11 @@
 "use client";
 
-// Renders a single Hermes tool call inside the CopilotKit chat. Hermes' tools
-// (search_files, read_file, patch, terminal, todo, …) execute SERVER-SIDE and
-// arrive as AG-UI TOOL_CALL_* / TOOL_CALL_RESULT events; CopilotKit's default
-// UI shows just a name, so we register this via a wildcard useCopilotAction
-// ({ name: "*" }) to surface what the agent actually did.
+// One OpenClaw tool call, rendered as a COMPACT ROW for the grouped
+// "Used N tools" dropdown. OpenClaw's tools (search_files, read_file, terminal,
+// todo, …) run server-side and arrive as AG-UI TOOL_CALL_* events; the wildcard
+// renderer in providers.tsx routes edits to <DiffCard> and PDFs to <PdfViewer>,
+// and everything else here. Each row is a one-liner (icon · name · path · arg ·
+// status); if there's a result it becomes a click-to-expand disclosure.
 
 import { InlineLocationChip } from "@/components/InlineLocationChip";
 
@@ -25,11 +26,11 @@ const ICONS: Record<string, string> = {
 function summarize(args: Record<string, unknown> | undefined): string {
   if (!args) return "";
   const a = args as Record<string, string>;
-  const val =
-    a.command ?? a.pattern ?? a.query ?? a.regex ?? a.content;
-  if (typeof val === "string") return val.length > 80 ? val.slice(0, 80) + "…" : val;
-  const first = Object.values(args)[0];
-  return typeof first === "string" ? first.slice(0, 80) : "";
+  const val = a.command ?? a.pattern ?? a.query ?? a.regex ?? a.content;
+  const pick = typeof val === "string" ? val : (Object.values(args).find((v) => typeof v === "string") as string | undefined);
+  if (!pick) return "";
+  const oneLine = pick.replace(/\s+/g, " ").trim();
+  return oneLine.length > 72 ? oneLine.slice(0, 72) + "…" : oneLine;
 }
 
 export function ToolCallCard({
@@ -54,33 +55,42 @@ export function ToolCallCard({
   const resultText =
     typeof result === "string" ? result : result != null ? JSON.stringify(result) : "";
 
-  return (
-    <div className="my-1.5 rounded-xl border border-[var(--color-line)] bg-[var(--color-surface)] px-3 py-2 text-sm shadow-sm">
-      <div className="flex flex-wrap items-center gap-2">
-        <span aria-hidden>{ICONS[name] ?? "🛠️"}</span>
-        <span className="font-medium">{name}</span>
-        {location && <InlineLocationChip path={location} />}
-        {summary && (
-          <code className="truncate rounded bg-[var(--color-brand-soft)] px-1.5 py-0.5 text-xs text-[var(--color-ink)]">
-            {summary}
-          </code>
-        )}
-        <span className="ml-auto shrink-0">
-          {running ? (
-            <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-[var(--color-brand)] border-t-transparent" />
-          ) : (
-            <span className="text-[var(--color-positive)]">✓</span>
-          )}
-        </span>
-      </div>
-      {!running && resultText && (
-        <details className="mt-1">
-          <summary className="cursor-pointer text-xs text-[var(--color-muted)]">result</summary>
-          <pre className="mt-1 max-h-40 overflow-auto whitespace-pre-wrap break-words rounded bg-[var(--color-canvas)] p-2 text-xs">
-            {resultText.length > 1200 ? resultText.slice(0, 1200) + "\n…" : resultText}
-          </pre>
-        </details>
+  const row = (
+    <div className="flex min-w-0 items-center gap-2 py-1.5">
+      <span className="shrink-0 text-[13px] leading-none" aria-hidden>
+        {ICONS[name] ?? "🛠️"}
+      </span>
+      <span className="shrink-0 text-[13px] font-medium text-[var(--color-ink)]">{name}</span>
+      {location && <InlineLocationChip path={location} />}
+      {summary && (
+        <code className="min-w-0 flex-1 truncate rounded bg-[var(--color-canvas)] px-1.5 py-0.5 font-mono text-[11px] text-[var(--color-muted)]">
+          {summary}
+        </code>
       )}
+      <span className="ml-auto shrink-0 text-xs">
+        {running ? (
+          <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-[var(--color-brand)] border-t-transparent" />
+        ) : (
+          <span className="text-[var(--color-positive)]">✓</span>
+        )}
+      </span>
     </div>
   );
+
+  const border = "border-b border-[color-mix(in_oklab,var(--color-line)_65%,transparent)] last:border-b-0";
+
+  // With a result → click-to-expand disclosure; otherwise a plain compact row.
+  if (!running && resultText) {
+    return (
+      <details className={`group/tool ${border}`}>
+        <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+          {row}
+        </summary>
+        <pre className="mb-1.5 ml-6 max-h-40 overflow-auto whitespace-pre-wrap break-words rounded-lg bg-[var(--color-canvas)] p-2 text-[11px] text-[var(--color-ink)]">
+          {resultText.length > 1200 ? resultText.slice(0, 1200) + "\n…" : resultText}
+        </pre>
+      </details>
+    );
+  }
+  return <div className={border}>{row}</div>;
 }

@@ -9,7 +9,7 @@ import {
 import { ToolCallCard } from "@/components/ToolCallCard";
 import { DiffCard } from "@/components/DiffCard";
 import { PdfViewer } from "@/components/PdfViewer";
-import { ToolCallsGroup } from "@/components/ToolCallsGroup";
+import { GroupedMessageView } from "@/components/GroupedMessageView";
 import {
   byCategory,
   budgetRemaining,
@@ -48,7 +48,7 @@ function LedgerContext() {
   return null;
 }
 
-// Last-known content per file, seeded from Hermes' own read_file results so a
+// Last-known content per file, seeded from OpenClaw's own read_file results so a
 // write_file can be diffed against what the file was before the edit.
 const fileCache = new Map<string, string>();
 
@@ -138,7 +138,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <aside className="flex w-[27rem] shrink-0 flex-col border-l border-[var(--color-line)] bg-[var(--color-surface)]">
           <header className="cc-chat-header">
             <span className="cc-chat-dot" aria-hidden />
-            <span>Hermes</span>
+            <span>CopilotKit × OpenClaw</span>
             <span className="cc-chat-sub">AG-UI · gpt-5.4</span>
           </header>
           <div className="min-h-0 flex-1" data-copilotkit>
@@ -146,10 +146,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
               agentId="default"
               labels={{
                 welcomeMessageText:
-                  "Hi — I'm the Hermes agent, running inside this app. Tell me to change how Financial Ledger looks or works and watch it update live.",
+                  "Hi — I'm OpenClaw, running inside this CopilotKit app. Tell me to change how Financial Ledger looks or works and watch it update live.",
               }}
-              // Collapse each message's tool calls into one disclosure.
-              chatView={{ messageView: { assistantMessage: { toolCallsView: ToolCallsGroup } } }}
+              // Fold ALL of the turn's tool calls into a single dropdown
+              // (reasoning + prose still render inline). See GroupedMessageView.
+              chatView={{ messageView: { children: GroupedMessageView } }}
             />
           </div>
         </aside>

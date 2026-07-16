@@ -4,7 +4,7 @@ import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "Financial Ledger",
-  description: "A personal expense tracker with a live Hermes copilot sidebar.",
+  description: "A personal expense tracker with a live CopilotKit × OpenClaw copilot sidebar.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

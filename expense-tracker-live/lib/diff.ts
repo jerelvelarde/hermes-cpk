@@ -1,4 +1,4 @@
-// Minimal line-level diff (LCS backtrack) for the Hermes edit cards. No deps.
+// Minimal line-level diff (LCS backtrack) for the OpenClaw edit cards. No deps.
 
 export type DiffLine = { type: "ctx" | "add" | "del"; text: string };
 

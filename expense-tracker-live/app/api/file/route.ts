@@ -4,7 +4,7 @@ import path from "path";
 
 export const dynamic = "force-dynamic";
 
-// The app's own directory — Hermes edits files in here, and Undo restores them.
+// The app's own directory — OpenClaw edits files in here, and Undo restores them.
 const ROOT = process.cwd();
 
 // Resolve a (possibly relative or absolute) path from a tool call to an
